@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:latest
+    restart: unless-stopped
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_PASSWORD: 'postgres'
+    volumes:
+      - database_data:/var/lib/postgresql/data
+    networks:
+      - backend
+  app:
+    # Configuration for building the docker image for the service
+    build:
+      context: . # Use an image built from the specified dockerfile in the current directory.
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000" # Forward the exposed port 8080 on the container to port 8080 on the host machine
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_NAME: postgres
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_PORT: 5432
+      SSL_MODE: disable
+      DB_MODE: production
+    networks: # Networks to join (Services on the same network can communicate with each other using their name)
+      - backend
+volumes:
+  database_data:
+    driver: local
+# Networks to be created to facilitate communication between containers
+networks:
+  backend:

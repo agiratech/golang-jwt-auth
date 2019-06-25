@@ -1,0 +1,339 @@
+{
+	"info": {
+		"_postman_id": "8060ccd3-02d7-47b0-8b6d-b247879315ab",
+		"name": "news",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "de0368b3-e393-4d5d-bb98-7ecbb57848c7",
+								"exec": [
+									"let jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"token\", jsonData.data.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\n\t\"username\": \"reddysai\",\n\t\"password\": \"reddysai\"\n}"
+						},
+						"url": {
+							"raw": "https://news-r.herokuapp.com/v1/user/login",
+							"protocol": "https",
+							"host": [
+								"news-r",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"v1",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "X-User-Email",
+								"value": "reddy@a.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8000/v1/user/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"v1",
+								"user",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "68515695-7b16-4ed5-9780-9d5bfea3d46b",
+								"exec": [
+									"let jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"token\", jsonData.data.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"reddysaib@gmail.com\",\n\t\"username\": \"reddysai\",\n\t\"password\": \"reddysai\"\n}"
+						},
+						"url": {
+							"raw": "https://news-r.herokuapp.com/v1/user/new",
+							"protocol": "https",
+							"host": [
+								"news-r",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"v1",
+								"user",
+								"new"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "post",
+			"item": [
+				{
+					"name": "list post",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://news-r.herokuapp.com/v1/posts?page=1",
+							"protocol": "https",
+							"host": [
+								"news-r",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"v1",
+								"posts"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\":\"How To do docker\",\n\t\"url\":\"https://www.agiratech.com/how-to-create-the-smallest-docker-image-for-your-golang-app/\",\n\t\"description\":\"Keeping big sized docker image in golang app will always affect us the performance of the application. Today, on this blog, we’re planning to guide you to create the small Docker image for your golang app that remains small, secure and easy to load. Also will see how to deploy it into the docker container.\",\n\t\"user_id\":1\n}"
+						},
+						"url": {
+							"raw": "https://news-r.herokuapp.com/v1/posts/1",
+							"protocol": "https",
+							"host": [
+								"news-r",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"v1",
+								"posts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\":\"How To Create The Smallest Docker Image For Your Golang App\",\n\t\"url\":\"https://www.agiratech.com/how-to-create-the-smallest-docker-image-for-your-golang-app/\",\n\t\"description\":\"Keeping big sized docker image in golang app will always affect us the performance of the application. Today, on this blog, we’re planning to guide you to create the small Docker image for your golang app that remains small, secure and easy to load. Also will see how to deploy it into the docker container.\",\n\t\"user_id\":1\n}"
+						},
+						"url": {
+							"raw": "https://news-r.herokuapp.com/v1/posts/new",
+							"protocol": "https",
+							"host": [
+								"news-r",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"v1",
+								"posts",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://news-r.herokuapp.com/v1/posts/1",
+							"protocol": "https",
+							"host": [
+								"news-r",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"v1",
+								"posts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "vote",
+			"item": [
+				{
+					"name": "vote",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"user_id\":1,\n\t\"post_id\":8\n}"
+						},
+						"url": {
+							"raw": "https://news-r.herokuapp.com/v1/vote",
+							"protocol": "https",
+							"host": [
+								"news-r",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"v1",
+								"vote"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
